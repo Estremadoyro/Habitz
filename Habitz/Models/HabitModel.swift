@@ -31,4 +31,5 @@ struct HabitModel: Identifiable, Codable {
   }
 
   var dateStart: Date
+  var iterationStart: Date?
 }

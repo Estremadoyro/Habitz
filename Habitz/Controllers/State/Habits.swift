@@ -19,6 +19,12 @@ final class Habits: ObservableObject {
     }
   }
 
+  let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+
+  func getStartPauseIcon(habit: HabitModel) -> String {
+    self.checkCurrentHabitIsActiveOne(currentHabit: habit) ? "pause.fill" : "play.fill"
+  }
+
   var isHabitActive: Bool {
     return self.userHabits.activeHabit.isActive
   }
@@ -30,12 +36,40 @@ final class Habits: ObservableObject {
     return nil
   }
 
+  func startHabitTime(habit: HabitModel) -> TimeInterval {
+    if self.checkCurrentHabitIsActiveOne(currentHabit: habit) {
+      self.userHabits.habits[self.getCurrentActiveHabit(habit: habit)].time += 1
+      return 1
+    }
+    return 0
+  }
+
+  func manageCurrentHabit(habit: HabitModel) -> Bool {
+    if self.checkCurrentHabitIsActiveOne(currentHabit: habit) {
+      self.toggleActiveHabit(habit: habit)
+      return true
+    } else if !self.isHabitActive {
+      self.toggleActiveHabit(habit: habit)
+      return true
+    }
+    return false
+  }
+
   func toggleActiveHabit(habit: HabitModel) {
     if let currentHabit = self.userHabits.habits.firstIndex(where: { $0.id == habit.id }) {
       self.userHabits.habits[currentHabit].isActive.toggle()
+      self.userHabits.habits[currentHabit].iterationStart = Date()
       print("Updated habit: \(habit.id)")
+      print("Iteration start @ \(self.userHabits.habits[currentHabit].iterationStart!)")
       print("name: \(self.userHabits.habits[currentHabit].name) | isActive: \(self.userHabits.habits[currentHabit].isActive)")
     }
+  }
+
+  func getCurrentActiveHabit(habit: HabitModel) -> Int {
+    if let currentHabit = self.userHabits.habits.firstIndex(where: { $0.id == habit.id }) {
+      return currentHabit
+    }
+    return -1
   }
 
   func checkCurrentHabitIsActiveOne(currentHabit: HabitModel) -> Bool {

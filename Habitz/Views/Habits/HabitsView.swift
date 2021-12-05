@@ -8,17 +8,20 @@
 import SwiftUI
 
 struct HabitContent: View {
-  @State var habitName: String
-  @State var hours: Int
-  @State var minutes: Int
+  @ObservedObject var habits: Habits
+  @State var habit: HabitModel
+
   var body: some View {
     VStack(alignment: .leading) {
-      Text(habitName)
+      Text(self.habit.name)
         .foregroundColor(Color.white)
         .font(.largeTitle.bold())
-      Text("Total time: \(self.hours) hrs., \(self.minutes) min.")
+      Text("\(self.habit.timeHours) hrs. \(self.habit.timeMinutes) min. \(self.habit.timeSeconds) sec.")
         .foregroundColor(Color.white)
         .font(.title3.bold())
+        .onReceive(self.habits.timer) { _ in
+          self.habit.time += self.habits.startHabitTime(habit: self.habit)
+        }
     }
     .padding(.leading)
   }
@@ -39,36 +42,15 @@ struct HabitStartBtn: View {
   @State var currentHabitActive: Bool = false
   @State var habit: HabitModel
 
-  var setHabitIcon: String {
-    return self.currentHabitActive ? "pause.fill" : "play.fill"
-  }
-
-  var loadIcons: String {
-    if self.habits.checkCurrentHabitIsActiveOne(currentHabit: self.habit) {
-      return "pause.fill"
-    }
-    return "play.fill"
-  }
-
-  func manageCurrentHabit() {
-    if self.habits.isHabitActive {
-      if self.habits.checkCurrentHabitIsActiveOne(currentHabit: self.habit) {
-        self.habits.toggleActiveHabit(habit: self.habit)
-        self.currentHabitActive.toggle()
-      }
-    } else if !self.habits.isHabitActive {
-      self.habits.toggleActiveHabit(habit: self.habit)
-      self.currentHabitActive.toggle()
-    }
-  }
-
   var body: some View {
-    Image(systemName: self.habits.checkCurrentHabitIsActiveOne(currentHabit: self.habit) ? "pause.fill" : "play.fill")
+    Image(systemName: self.habits.getStartPauseIcon(habit: self.habit))
       .foregroundColor(Color.white)
       .font(.title)
       .padding([.bottom, .trailing])
       .onTapGesture {
-        self.manageCurrentHabit()
+        if self.habits.manageCurrentHabit(habit: self.habit) {
+          self.currentHabitActive.toggle()
+        }
       }
   }
 }
@@ -125,11 +107,12 @@ struct HabitsView: View {
             ForEach(self.sortedHabitsByTime) { habit in
               ZStack(alignment: .leading) {
                 HabitBackground(habits: self.habits, habit: habit)
-                HabitContent(habitName: habit.name, hours: habit.timeHours, minutes: habit.timeMinutes)
+                HabitContent(habits: self.habits, habit: habit)
               }
               .padding(.top, 3)
               .padding(.horizontal, 3)
             }
+            .animation(.default)
           }
         }
         .frame(height: 300)

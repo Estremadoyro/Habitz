@@ -74,6 +74,7 @@ struct CategoriesView: View {
               }
               .padding(.vertical, 3)
             }
+            .animation(.default)
           }
           .padding(.horizontal)
         }
