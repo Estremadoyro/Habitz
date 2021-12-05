@@ -15,7 +15,9 @@ struct HabitModel: Identifiable, Codable {
   var id = UUID()
   var name: String
   var category: Category
+  var isActive: Bool
   var time: TimeInterval
+
   var timeSeconds: Int {
     return TimeIntervalFormatter.formatter(time: self.time, magnitude: TimeMagnitudes.seconds)
   }
