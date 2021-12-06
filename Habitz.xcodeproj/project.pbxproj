@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A74B44BE2753280900A1240E /* CreateNewHabitState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74B44BD2753280900A1240E /* CreateNewHabitState.swift */; };
+		A7733BD8275D79ED00DC62E7 /* UpdateHabitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7733BD7275D79ED00DC62E7 /* UpdateHabitView.swift */; };
 		A775E732275C7B5700C1D17E /* HabitActivePulseAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A775E731275C7B5700C1D17E /* HabitActivePulseAnimationView.swift */; };
 		A792B4532752ED9D0020F2AF /* GlobalViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = A792B4522752ED9D0020F2AF /* GlobalViews.swift */; };
 		A792B4552752FC380020F2AF /* CategoriesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A792B4542752FC380020F2AF /* CategoriesController.swift */; };
@@ -33,6 +34,7 @@
 
 /* Begin PBXFileReference section */
 		A74B44BD2753280900A1240E /* CreateNewHabitState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewHabitState.swift; sourceTree = "<group>"; };
+		A7733BD7275D79ED00DC62E7 /* UpdateHabitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateHabitView.swift; sourceTree = "<group>"; };
 		A775E731275C7B5700C1D17E /* HabitActivePulseAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitActivePulseAnimationView.swift; sourceTree = "<group>"; };
 		A792B4522752ED9D0020F2AF /* GlobalViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalViews.swift; sourceTree = "<group>"; };
 		A792B4542752FC380020F2AF /* CategoriesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesController.swift; sourceTree = "<group>"; };
@@ -75,6 +77,14 @@
 				A7E428BD2753F9AD002C5AEE /* Habits.swift */,
 			);
 			path = State;
+			sourceTree = "<group>";
+		};
+		A7733BD6275D79DA00DC62E7 /* UpdateHabitView */ = {
+			isa = PBXGroup;
+			children = (
+				A7733BD7275D79ED00DC62E7 /* UpdateHabitView.swift */,
+			);
+			path = UpdateHabitView;
 			sourceTree = "<group>";
 		};
 		A775E730275C7B2700C1D17E /* AnimatedViews */ = {
@@ -177,6 +187,7 @@
 		A7ECF97A274F2DDD00915A8E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				A7733BD6275D79DA00DC62E7 /* UpdateHabitView */,
 				A775E730275C7B2700C1D17E /* AnimatedViews */,
 				A792B4512752ED6E0020F2AF /* GlobalViews */,
 				A7F367562750A6FC002B9DDC /* CreateNewHabit */,
@@ -309,6 +320,7 @@
 				A792B4532752ED9D0020F2AF /* GlobalViews.swift in Sources */,
 				A7EA300D27574C8A008F4B33 /* HabitsController.swift in Sources */,
 				A7F367582750A71B002B9DDC /* CreateNewHabitView.swift in Sources */,
+				A7733BD8275D79ED00DC62E7 /* UpdateHabitView.swift in Sources */,
 				A7ECF96C274F2DB600915A8E /* HabitzApp.swift in Sources */,
 				A7ECF985274F36DC00915A8E /* HomeModifiers.swift in Sources */,
 				A7E79501274F407F004C7826 /* HomeNewHabitButton.swift in Sources */,

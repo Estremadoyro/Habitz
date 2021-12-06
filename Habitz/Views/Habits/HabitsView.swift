@@ -58,6 +58,7 @@ struct HabitStartBtn: View {
 struct HabitBackground: View {
   @ObservedObject var habits: Habits
   @State var habit: HabitModel
+  @State private var updatingHabit: Bool = false
   var category: HabitTypes {
     return self.habit.category.name
   }
@@ -77,6 +78,12 @@ struct HabitBackground: View {
         .frame(width: 350, height: 150)
         .cornerRadius(25)
         .shadow(color: self.bgColor, radius: 3)
+        .onTapGesture {
+          self.updatingHabit.toggle()
+        }
+        .sheet(isPresented: $updatingHabit) {
+          UpdateHabitView(habits: self.habits, habit: self.habit, isUpdatingHabit: self.$updatingHabit)
+        }
       VStack {
         HabitIcon(bgIcon: self.bgIcon)
         Spacer()
@@ -94,7 +101,7 @@ struct HabitsView: View {
 
   var body: some View {
     ZStack {
-      CustomContainer(height: 400.0)
+      CustomContainer(height: 520.0)
         .padding(.horizontal)
       VStack(alignment: .leading) {
         Text("Habits")
@@ -115,7 +122,7 @@ struct HabitsView: View {
             .animation(.default)
           }
         }
-        .frame(height: 300)
+        .frame(height: 420)
         .cornerRadius(25)
       }
     }

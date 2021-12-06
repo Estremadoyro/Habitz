@@ -36,9 +36,28 @@ final class Habits: ObservableObject {
     return nil
   }
 
+  func loadActiveHabitTime() -> TimeInterval {
+    if let activeHabit = self.getActiveHabit {
+      let habitIndex = self.getCurrentActiveHabit(habit: activeHabit)
+      if let iterationStart = activeHabit.iterationStart {
+        var auxIterationStart: Date = iterationStart
+        auxIterationStart.addTimeInterval(activeHabit.iterationDuration)
+        let timeDifference = Date().timeIntervalSince(auxIterationStart)
+        self.userHabits.habits[habitIndex].time += timeDifference
+        print("New time loaded: \(self.userHabits.habits[habitIndex].time)")
+        return timeDifference
+      }
+    }
+    print("owo no active habit found when loaded")
+    return 0
+  }
+
   func startHabitTime(habit: HabitModel) -> TimeInterval {
     if self.checkCurrentHabitIsActiveOne(currentHabit: habit) {
       self.userHabits.habits[self.getCurrentActiveHabit(habit: habit)].time += 1
+      self.userHabits.habits[self.getCurrentActiveHabit(habit: habit)].iterationDuration += 1
+      print("owo Iteration elapsed")
+      print("owo \(self.userHabits.habits[self.getCurrentActiveHabit(habit: habit)].iterationDuration)")
       return 1
     }
     return 0
@@ -59,8 +78,10 @@ final class Habits: ObservableObject {
     if let currentHabit = self.userHabits.habits.firstIndex(where: { $0.id == habit.id }) {
       self.userHabits.habits[currentHabit].isActive.toggle()
       self.userHabits.habits[currentHabit].iterationStart = Date()
+      self.userHabits.habits[currentHabit].iterationDuration = 0
       print("Updated habit: \(habit.id)")
-      print("Iteration start @ \(self.userHabits.habits[currentHabit].iterationStart!)")
+      print("owo Iteration start @ \(self.userHabits.habits[currentHabit].iterationStart!)")
+      print("owo Habit time when started: \(self.userHabits.habits[currentHabit].time)")
       print("name: \(self.userHabits.habits[currentHabit].name) | isActive: \(self.userHabits.habits[currentHabit].isActive)")
     }
   }
@@ -69,7 +90,7 @@ final class Habits: ObservableObject {
     if let currentHabit = self.userHabits.habits.firstIndex(where: { $0.id == habit.id }) {
       return currentHabit
     }
-    return -1
+    return 0
   }
 
   func checkCurrentHabitIsActiveOne(currentHabit: HabitModel) -> Bool {
@@ -79,13 +100,23 @@ final class Habits: ObservableObject {
     return false
   }
 
+  func deleteHabit(habit: HabitModel) {
+    let habitIndex = self.getCurrentActiveHabit(habit: habit)
+    if habitIndex != -1 {
+      print("removed habit: \(self.userHabits.habits[habitIndex])")
+      self.userHabits.habits.remove(at: habitIndex)
+    }
+  }
+
   init() {
 //    UserDefaults.standard.removeObject(forKey: "UserHabits")
     if let savedHabits = UserDefaults.standard.data(forKey: "UserHabits") {
       if let decodedHabits = try? JSONDecoder().decode(UserHabitsModel.self, from: savedHabits) {
-        print("LOADED HABITS")
-        print(decodedHabits)
+//        print("owo LOADED HABITS")
+//        print(decodedHabits)
         self.userHabits = decodedHabits
+        let timeLoaded = self.loadActiveHabitTime()
+        print("owo Time loaded from active habit: \(timeLoaded)")
         return
       }
     }

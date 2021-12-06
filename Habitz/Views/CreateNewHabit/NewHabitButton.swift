@@ -14,7 +14,7 @@ struct NewHabitButton: View {
     Button(action: {
       if createNewHabitState.isCreatingNewHabit, createNewHabitState.habitName != "" {
         let habitCategory = HabitModel.Category(name: self.createNewHabitState.selectedCategory)
-        let newHabit = HabitModel(name: self.createNewHabitState.habitName, category: habitCategory, isActive: false, time: 1400, dateStart: Date())
+        let newHabit = HabitModel(name: self.createNewHabitState.habitName, category: habitCategory, isActive: false, time: 0, dateStart: Date(), iterationDuration: 0)
         self.habits.userHabits.habits.append(newHabit)
         self.createNewHabitState.isCreatingNewHabit = false
         print("New user habits: \(habits.userHabits.habits)")
