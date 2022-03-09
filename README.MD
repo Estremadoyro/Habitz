@@ -1,5 +1,5 @@
-## ScreenShots
-### Home screen
-![alt text](https://i.ibb.co/gdx4cyk/Simulator-Screen-Shot-i-Phone-11-2021-12-01-at-02-36-41.png)
-### Create new habit screen
-![alt text](https://i.ibb.co/7n9Rsgz/newhabit-view.png)
+# Habitz
+Habitz is a SwiftUI app designed to help keeping track of your daily habits. It also ranks the habits by frecuency, and stores them in your local files.
+
+## Demo
+<img src="images/gifs/Gif-Habitz-Demo.gif" alt="Habitz-Demo" width="200" />
